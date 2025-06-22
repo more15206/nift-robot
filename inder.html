@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIFT B.Des 2025 Admissions: Your Personalized Rank Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+    <script>
+        // Register the annotation plugin globally as soon as it's loaded.
+        // This ensures the plugin is available before any charts are created.
+        Chart.register(ChartjsPluginAnnotation);
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; 
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .flowchart-step {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            position: relative;
+            padding-left: 50px;
+        }
+        .flowchart-step-icon {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .flowchart-line {
+            position: absolute;
+            left: 19px;
+            top: 100%;
+            width: 2px;
+            height: 3rem; 
+        }
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .info-tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #334155;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%; /* Position above the text */
+            left: 50%;
+            margin-left: -150px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+        .info-tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #334155 transparent transparent transparent;
+        }
+        .info-tooltip.active .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-xl md:text-3xl font-bold text-center" style="color: #004AAD;">Navigating Your NIFT B.Des Admission</h1>
+            <p class="text-center text-sm md:text-base text-gray-600 mt-1">A Personalized Infographic for Your Rank</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-8">
+
+        <section id="ranks" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-4xl font-bold" style="color: #004AAD;">Understanding Your Ranks</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl mx-auto">You've received two ranks, which can be confusing. Here's what they mean and, most importantly, which one is the key to your admission.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center flex flex-col justify-center border-b-4 border-gray-300">
+                    <h3 class="text-lg font-semibold text-gray-500">Your Input Common Merit Rank (CMR)</h3>
+                    <p id="display-cmr" class="text-6xl font-extrabold my-4 text-gray-700">8500</p>
+                    <p class="text-sm text-gray-600">This is your overall rank among all test-takers nationwide. While it shows your general performance, it's not the primary factor for your admission due to your category status.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center flex flex-col justify-center border-b-4" style="border-color: #0096C7;">
+                    <h3 class="text-lg font-semibold" style="color: #004AAD;">Your Input Category Rank <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full ml-2">YOUR KEY</span></h3>
+                    <p id="display-category-rank" class="text-6xl font-extrabold my-4" style="color: #004AAD;">791</p>
+                    <p class="text-sm text-gray-600">This is your rank within your specific reservation category (e.g., OBC, SC, ST). This is the critical number that will determine your admission to a reserved seat.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="landscape" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-4xl font-bold" style="color: #004AAD;">The NIFT B.Des Landscape</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl mx-auto">A total of 3,218 B.Des seats are available across all NIFT campuses. Here's how they are distributed by specialization and category reservation.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4">B.Des Seats by Specialization (2025)</h3>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="specializationChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-500 mt-4">This chart shows the total national seat count for each B.Des program. Fashion Communication and Fashion Design have the highest number of seats.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4">Seat Reservation Policy</h3>
+                     <div class="chart-container h-80 md:h-96">
+                        <canvas id="reservationChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-500 mt-4">NIFT reserves seats for various categories as per government norms. Your Category Rank means you are competing within a dedicated portion of these seats, not against the entire pool of applicants.</p>
+                </div>
+            </div>
+
+            <!-- Updated Section: B.Des Specialization Details with Dropdown -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-2xl font-bold text-center mb-6" style="color: #004AAD;">B.Des Specializations at a Glance</h3>
+                <div class="flex justify-center mb-6">
+                    <label for="department-select" class="block mb-2 text-sm font-medium text-gray-900 mr-4 mt-2">Select a Department:</label>
+                    <select id="department-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-xs p-2.5">
+                        <!-- Options will be dynamically loaded here -->
+                    </select>
+                </div>
+                <div id="department-details" class="border rounded-lg p-4 bg-blue-50 text-blue-800">
+                    <h4 id="department-title" class="font-bold text-lg mb-2 flex items-center"></h4>
+                    <p id="department-description" class="text-sm text-gray-700"></p>
+                </div>
+                <p class="text-sm text-center text-gray-600 mt-4">Choose a specialization from the dropdown to learn more about its focus area.</p>
+            </div>
+        </section>
+
+        <section id="prospects" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-4xl font-bold" style="color: #004AAD;">Your Admission Prospects: A Data Deep Dive
+                    <span class="info-tooltip">
+                        <svg class="w-6 h-6 inline-block text-blue-500 hover:text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="tooltiptext">
+                            <p class="font-bold mb-1">How to Read This Chart:</p>
+                            <p>- The dashed red line represents your input Category Rank. </p>
+                            <p>- Each bar shows the simulated closing rank for a specific course and category.</p>
+                            <p>- If a bar extends to the right (higher rank value) beyond your dashed line, it indicates a good chance of admission for that program and category, as your rank is better than the simulated cut-off.</p>
+                            <p>- If your line is to the right of a bar, it means your rank is higher than the simulated cut-off, making admission for that combination less likely.</p>
+                            <p>- Use the filters above to refine the data for a specific campus, year, or category.</p>
+                            <p class="mt-2 text-yellow-300">Remember: 2025 data is a projection and all data is simulated.</p>
+                        </span>
+                    </span>
+                </h2>
+                <p class="mt-2 text-gray-600 max-w-3xl mx-auto">Input your ranks below to see how they stack up against simulated historical and expected closing ranks for various categories. Use the campus, year, and category selectors to explore different NIFT locations and data years.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <div>
+                        <label for="cmr-input" class="block mb-2 text-sm font-medium text-gray-900">Your Common Merit Rank (CMR):</label>
+                        <input type="number" id="cmr-input" value="8500" min="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label for="category-rank-input" class="block mb-2 text-sm font-medium text-gray-900">Your Category Rank:</label>
+                        <input type="number" id="category-rank-input" value="791" min="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label for="campus-select" class="block mb-2 text-sm font-medium text-gray-900">Select a Campus:</label>
+                        <select id="campus-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option selected value="Bengaluru">NIFT Bengaluru</option>
+                            <option value="Bhopal">NIFT Bhopal</option>
+                            <option value="Bhubaneswar">NIFT Bhubaneswar</option>
+                            <option value="Chennai">NIFT Chennai</option>
+                            <option value="Daman">NIFT Daman</option>
+                            <option value="Delhi">NIFT Delhi</option>
+                            <option value="Gandhinagar">NIFT Gandhinagar</option>
+                            <option value="Hyderabad">NIFT Hyderabad</option>
+                            <option value="Jodhpur">NIFT Jodhpur</option>
+                            <option value="Kangra">NIFT Kangra</option>
+                            <option value="Kannur">NIFT Kannur</option>
+                            <option value="Kolkata">NIFT Kolkata</option>
+                            <option value="Mumbai">NIFT Mumbai</option>
+                            <option value="Panchkula">NIFT Panchkula</option>
+                            <option value="Patna">NIFT Patna</option>
+                            <option value="Raebareli">NIFT Raebareli</option>
+                            <option value="Shillong">NIFT Shillong</option>
+                            <option value="Srinagar">NIFT Srinagar</option>
+                            <option value="Varanasi">NIFT Varanasi</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="year-select" class="block mb-2 text-sm font-medium text-gray-900">Select Year (Simulated):</label>
+                        <select id="year-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option value="2025">2025 (Expected)</option>
+                            <option value="2024">2024</option>
+                            <option selected value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                        </select>
+                    </div>
+                     <div>
+                        <label for="program-select" class="block mb-2 text-sm font-medium text-gray-900">Select B.Des Program:</label>
+                        <select id="program-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <!-- Options will be dynamically loaded here -->
+                        </select>
+                    </div>
+                     <div>
+                        <label for="category-filter-select" class="block mb-2 text-sm font-medium text-gray-900">Select Category to View:</label>
+                        <select id="category-filter-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option selected value="All">All Categories</option>
+                            <option value="General">General</option>
+                            <option value="OBC">OBC</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                            <option value="EWS">EWS</option>
+                            <option value="PwD">PwD</option>
+                        </select>
+                    </div>
+                     <div>
+                        <label for="applicant-category-select" class="block mb-2 text-sm font-medium text-gray-900">Your Actual Category (for analysis):</label>
+                        <select id="applicant-category-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option selected value="OBC">OBC</option>
+                            <option value="General">General</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                            <option value="EWS">EWS</option>
+                            <option value="PwD">PwD</option>
+                        </select>
+                    </div>
+                    <button id="update-ranks-button" class="mt-auto px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Update Chart</button>
+                </div>
+                <div id="summary-statistics" class="bg-blue-50 p-4 rounded-lg text-sm mb-6 text-gray-700 hidden">
+                    <p class="font-semibold mb-1">Summary for NIFT <span id="summary-campus">Bengaluru</span> (<span id="summary-year">2023</span>):</p>
+                    <p>- Simulated Lowest Closing Rank (<span id="summary-lowest-category">General</span>): <span id="summary-lowest-rank">-</span></p>
+                    <p>- Simulated Highest Closing Rank (<span id="summary-highest-category">ST</span>): <span id="summary-highest-rank">-</span></p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="cutoffChart"></canvas>
+                </div>
+                <p id="chart-explanation" class="text-sm text-center text-gray-600 mt-4">The red dashed line shows your **effective rank for analysis** (<span id="current-category-rank">791</span>). This rank is determined by your "Actual Category" selection (e.g., Common Merit Rank for General, Category Rank for others). If a bar representing a specific category and course extends past this line, it means the simulated closing rank for that category in the selected year was higher than your effective rank, indicating a strong chance of admission for that specific program and category. **Note: 2025 data is an expected/simulated projection.**</p>
+                <div id="chance-indicator" class="mt-6 p-4 rounded-lg text-center text-lg font-semibold" style="background-color: #E0F7FA; color: #00796B;">
+                    <p><span id="chance-message">Update the chart to see your admission prospects!</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="trend-analysis" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-4xl font-bold" style="color: #004AAD;">Category & Course Rank Trend Over Years</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl mx-auto">Select a specific B.Des program and category to visualize how simulated closing ranks have changed from 2021 to 2025 at your chosen campus.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <div>
+                        <label for="trend-campus-select" class="block mb-2 text-sm font-medium text-gray-900">Select Campus:</label>
+                        <select id="trend-campus-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option selected value="Bengaluru">NIFT Bengaluru</option>
+                            <option value="Bhopal">NIFT Bhopal</option>
+                            <option value="Bhubaneswar">NIFT Bhubaneswar</option>
+                            <option value="Chennai">NIFT Chennai</option>
+                            <option value="Daman">NIFT Daman</option>
+                            <option value="Delhi">NIFT Delhi</option>
+                            <option value="Gandhinagar">NIFT Gandhinagar</option>
+                            <option value="Hyderabad">NIFT Hyderabad</option>
+                            <option value="Jodhpur">NIFT Jodhpur</option>
+                            <option value="Kangra">NIFT Kangra</option>
+                            <option value="Kannur">NIFT Kannur</option>
+                            <option value="Kolkata">NIFT Kolkata</option>
+                            <option value="Mumbai">NIFT Mumbai</option>
+                            <option value="Panchkula">NIFT Panchkula</option>
+                            <option value="Patna">NIFT Patna</option>
+                            <option value="Raebareli">NIFT Raebareli</option>
+                            <option value="Shillong">NIFT Shillong</option>
+                            <option value="Srinagar">NIFT Srinagar</option>
+                            <option value="Varanasi">NIFT Varanasi</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="trend-program-select" class="block mb-2 text-sm font-medium text-gray-900">Select B.Des Program:</label>
+                        <select id="trend-program-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <!-- Options will be dynamically loaded based on campus -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="trend-category-select" class="block mb-2 text-sm font-medium text-gray-900">Select Category:</label>
+                        <select id="trend-category-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option selected value="OBC">OBC</option>
+                            <option value="General">General</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                            <option value="EWS">EWS</option>
+                            <option value="PwD">PwD</option>
+                        </select>
+                    </div>
+                    <button id="update-trend-button" class="mt-auto px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Show Trend</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                 <p class="text-sm text-center text-gray-600 mt-4">This line chart illustrates the simulated closing rank trend for the selected B.Des program and category over the years. **Note: 2025 data is an expected/simulated projection.**</p>
+            </div>
+        </section>
+
+
+        <section id="counseling" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-4xl font-bold" style="color: #004AAD;">The Path to Admission</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl mx-auto">The NIFT counseling process is a multi-step journey. Here's a clear roadmap of what to expect.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <div class="max-w-3xl mx-auto">
+                    <div class="flowchart-step mb-12">
+                        <div class="flowchart-step-icon text-white" style="background-color: #004AAD;">📝</div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">1. Register & Fill Choices</h4>
+                            <p class="text-gray-600 text-sm">Log in to the NIFT portal, register for counseling, and carefully prioritize your preferred campuses and B.Des programs.</p>
+                        </div>
+                        <div class="flowchart-line" style="background-color: #CAF0F8;"></div>
+                    </div>
+                    <div class="flowchart-step mb-12">
+                        <div class="flowchart-step-icon text-white" style="background-color: #0096C7;">📂</div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">2. Upload & Verify Documents</h4>
+                            <p class="text-gray-600 text-sm">Upload scanned copies of required documents, especially your Class 10/12 mark sheets and valid Category certificate.</p>
+                        </div>
+                        <div class="flowchart-line" style="background-color: #CAF0F8;"></div>
+                    </div>
+                    <div class="flowchart-step mb-12">
+                        <div class="flowchart-step-icon text-white" style="background-color: #0096C7;">💳</div>
+                         <div class="ml-4">
+                             <h4 class="font-bold text-lg">3. Pay Counselling Fee</h4>
+                             <p class="text-gray-600 text-sm">Pay the non-refundable counseling fee of <span class="font-bold">₹9,300</span> to lock your choices and complete your registration.</p>
+                         </div>
+                        <div class="flowchart-line" style="background-color: #CAF0F8;"></div>
+                    </div>
+                    <div class="flowchart-step mb-12">
+                        <div class="flowchart-step-icon text-white" style="background-color: #48CAE4;">🪑</div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">4. Seat Allotment</h4>
+                            <p class="text-gray-600 text-sm">Seats are allotted based on your rank and choices. You'll be notified via email if you get a seat in any of the multiple rounds.</p>
+                        </div>
+                         <div class="flowchart-line" style="background-color: #CAF0F8;"></div>
+                    </div>
+                     <div class="flowchart-step">
+                        <div class="flowchart-step-icon text-white" style="background-color: #ADE8F4;">✅</div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">5. Accept Your Seat</h4>
+                            <p class="text-sm text-gray-600">If allotted a seat, you must pay the admission fee of <span class="font-bold">₹1,83,200</span> to confirm. You can choose to 'Freeze' your seat or 'Float' to be considered for higher preferences in the next round.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="strategy" class="mb-12">
+            <div class="text-center mb-8">
+                 <h2 class="text-2xl md:text-4xl font-bold" style="color: #004AAD;">Your Strategic Action Plan</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl mx-auto">Your rank is strong, but a smart strategy is key. Here's what to do next to maximize your chances.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-3">🔬</span>Research</h4>
+                    <p class="text-sm text-gray-600">Dive deep into the previous years' closing ranks for your specific category across all 19 NIFT campuses.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-3">🎯</span>Prioritize</h4>
+                    <p class="text-sm text-gray-600">Create a balanced choice list with a mix of ambitious dream choices and realistic, safe options where your rank is well within the cut-off.</p>
+                </div>
+                 <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-3">📋</span>Prepare</h4>
+                    <p class="text-sm text-gray-600">Gather all your documents now. Ensure your category certificate is valid and meets NIFT's date requirements.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h4 class="font-bold text-lg mb-2 flex items-center"><span class="text-2xl mr-3">🔄</span>Stay Updated</h4>
+                    <p class="text-sm text-gray-600">Regularly check the official NIFT website for counseling dates and announcements. Don andapos;t miss any deadlines!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-12 py-6">
+        <div class="container mx-auto px-6 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 NIFT Admission Analysis. This infographic is for informational purposes based on simulated data.</p>
+            <p class="mt-1">Always refer to the official NIFT website for final information.</p>
+        </div>
+    </footer>
+    
+<script>
+    // Utility function to wrap long labels for better chart readability
+    function wrapLabels(label, maxWidth) {
+        if (typeof label !== 'string' || label.length <= maxWidth) {
+            return label;
+        }
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                lines.push(currentLine.trim());
+                currentLine = word;
+            } else {
+                currentLine = (currentLine + ' ' + word).trim();
+            }
+        });
+        if (currentLine) {
+            lines.push(currentLine.trim());
+        }
+        return lines;
+    }
+
+    // Callback for tooltip title to handle wrapped labels
+    const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        return Array.isArray(label) ? label.join(' ') : label;
+    };
+    
+    // Common options for charts
+    const commonChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    padding: 20,
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    title: tooltipTitleCallback
+                }
+            }
+        }
+    };
+    
+    // Data for Specialization Distribution Chart (Doughnut)
+    const specializationData = {
+        labels: ['Accessory Design', 'Fashion Comm.', 'Fashion Design', 'Knitwear Design', 'Leather Design', 'Textile Design', 'Fashion Interior'].map(l => wrapLabels(l, 16)),
+        datasets: [{
+            label: 'Total Seats',
+            data: [596, 719, 719, 310, 152, 681, 41],
+            backgroundColor: ['#004AAD', '#0096C7', '#48CAE4', '#ADE8F4', '#CAF0F8', '#023E8A', '#0077B6'], // Using more shades of blue
+            borderColor: '#ffffff',
+            borderWidth: 2
+        }]
+    };
+    new Chart(document.getElementById('specializationChart'), {
+        type: 'doughnut',
+        data: specializationData,
+        options: commonChartOptions
+    });
+
+    // Data for Reservation Policy Chart (Pie)
+    const reservationData = {
+        labels: ['OBC-NCL', 'SC', 'ST', 'GEN-EWS', 'General/Open'].map(l => wrapLabels(l, 16)),
+        datasets: [{
+            label: 'Reservation %',
+            data: [27, 15, 7.5, 10, 40.5],
+            backgroundColor: ['#FF5733', '#33FF57', '#0096C7', '#FFC300', '#A020F0'], // High contrast colors
+            borderColor: '#ffffff',
+            borderWidth: 2
+        }]
+    };
+    new Chart(document.getElementById('reservationChart'), {
+        type: 'pie',
+        data: reservationData,
+        options: commonChartOptions
+    });
+
+    // Simulated Cut-off Data for various campuses, years, and categories
+    const cutoffData = {
+        'Kolkata': {
+            '2025': {
+                'Fashion Design': {'General': 600, 'OBC': 1200, 'SC': 2950, 'ST': 3900, 'EWS': 780, 'PwD': 9400},
+                'Fashion Comm.': {'General': 450, 'OBC': 1650, 'SC': 4300, 'ST': 6000, 'EWS': 1000, 'PwD': 9700},
+                'Knitwear Design': {'General': 1700, 'OBC': 4600, 'SC': 8900, 'ST': 8400, 'EWS': 3400, 'PwD': 10400},
+                'Leather Design': {'General': 3100, 'OBC': 5300, 'SC': 6800, 'ST': 7700, 'EWS': 3900, 'PwD': 10900},
+                'Textile Design': {'General': 2500, 'OBC': 4250, 'SC': 8900, 'ST': 5200, 'EWS': 3100, 'PwD': 10100}
+            },
+            '2024': {
+                'Fashion Design': {'General': 610, 'OBC': 1220, 'SC': 3000, 'ST': 3950, 'EWS': 790, 'PwD': 9450},
+                'Fashion Comm.': {'General': 460, 'OBC': 1680, 'SC': 4350, 'ST': 6050, 'EWS': 1020, 'PwD': 9750},
+                'Knitwear Design': {'General': 1750, 'OBC': 4650, 'SC': 8950, 'ST': 8450, 'EWS': 3450, 'PwD': 10450},
+                'Leather Design': {'General': 3150, 'OBC': 5350, 'SC': 6850, 'ST': 7750, 'EWS': 3950, 'PwD': 10950},
+                'Textile Design': {'General': 2550, 'OBC': 4300, 'SC': 8950, 'ST': 5250, 'EWS': 3150, 'PwD': 10150}
+            },
+            '2023': {
+                'Fashion Design': {'General': 632, 'OBC': 1256, 'SC': 3061, 'ST': 4024, 'EWS': 800, 'PwD': 9500},
+                'Fashion Comm.': {'General': 467, 'OBC': 1716, 'SC': 4406, 'ST': 6127, 'EWS': 1050, 'PwD': 9800},
+                'Knitwear Design': {'General': 1807, 'OBC': 4730, 'SC': 9026, 'ST': 8500, 'EWS': 3500, 'PwD': 10500},
+                'Leather Design': {'General': 3180, 'OBC': 5428, 'SC': 6932, 'ST': 7800, 'EWS': 4000, 'PwD': 11000},
+                'Textile Design': {'General': 2645, 'OBC': 4385, 'SC': 9031, 'ST': 5348, 'EWS': 3200, 'PwD': 10200}
+            },
+            '2022': {
+                'Fashion Design': {'General': 650, 'OBC': 1300, 'SC': 3100, 'ST': 4100, 'EWS': 850, 'PwD': 9800},
+                'Fashion Comm.': {'General': 480, 'OBC': 1750, 'SC': 4450, 'ST': 6200, 'EWS': 1100, 'PwD': 10000},
+                'Knitwear Design': {'General': 1850, 'OBC': 4800, 'SC': 9100, 'ST': 8600, 'EWS': 3600, 'PwD': 10600},
+                'Leather Design': {'General': 3200, 'OBC': 5500, 'SC': 7000, 'ST': 7900, 'EWS': 4100, 'PwD': 11100},
+                'Textile Design': {'General': 2700, 'OBC': 4400, 'SC': 9100, 'ST': 5400, 'EWS': 3300, 'PwD': 10300}
+            },
+            '2021': {
+                'Fashion Design': {'General': 680, 'OBC': 1350, 'SC': 3200, 'ST': 4200, 'EWS': 900, 'PwD': 10000},
+                'Fashion Comm.': {'General': 500, 'OBC': 1800, 'SC': 4500, 'ST': 6300, 'EWS': 1150, 'PwD': 10200},
+                'Knitwear Design': {'General': 1900, 'OBC': 4900, 'SC': 9200, 'ST': 8700, 'EWS': 3700, 'PwD': 10800},
+                'Leather Design': {'General': 3300, 'OBC': 5600, 'SC': 7100, 'ST': 8000, 'EWS': 4200, 'PwD': 11300},
+                'Textile Design': {'General': 2800, 'OBC': 4500, 'SC': 9200, 'ST': 5500, 'EWS': 3400, 'PwD': 10500}
+            }
+        },
+        'Hyderabad': {
+            '2025': {
+                'Fashion Design': {'General': 420, 'OBC': 1350, 'SC': 2450, 'ST': 2800, 'EWS': 900, 'PwD': 8800},
+                'Fashion Comm.': {'General': 450, 'OBC': 3100, 'SC': 4650, 'ST': 3900, 'EWS': 1900, 'PwD': 9100},
+                'Accessory Design': {'General': 3900, 'OBC': 3600, 'SC': 7700, 'ST': 6800, 'EWS': 2700, 'PwD': 9900},
+                'Knitwear Design': {'General': 1300, 'OBC': 3850, 'SC': 8200, 'ST': 8800, 'EWS': 2900, 'PwD': 10400},
+                'Textile Design': {'General': 1000, 'OBC': 3800, 'SC': 8500, 'ST': 8150, 'EWS': 2800, 'PwD': 10200}
+            },
+            '2024': {
+                'Fashion Design': {'General': 435, 'OBC': 1380, 'SC': 2500, 'ST': 2850, 'EWS': 920, 'PwD': 8850},
+                'Fashion Comm.': {'General': 465, 'OBC': 3150, 'SC': 4700, 'ST': 3950, 'EWS': 1950, 'PwD': 9150},
+                'Accessory Design': {'General': 3950, 'OBC': 3670, 'SC': 7780, 'ST': 6880, 'EWS': 2750, 'PwD': 9950},
+                'Knitwear Design': {'General': 1320, 'OBC': 3900, 'SC': 8250, 'ST': 8850, 'EWS': 2950, 'PwD': 10450},
+                'Textile Design': {'General': 1050, 'OBC': 3870, 'SC': 8580, 'ST': 8200, 'EWS': 2850, 'PwD': 10250}
+            },
+            '2023': {
+                'Fashion Design': {'General': 452, 'OBC': 1416, 'SC': 2542, 'ST': 2918, 'EWS': 950, 'PwD': 8900},
+                'Fashion Comm.': {'General': 472, 'OBC': 3212, 'SC': 4798, 'ST': 4060, 'EWS': 2000, 'PwD': 9200},
+                'Accessory Design': {'General': 4066, 'OBC': 3742, 'SC': 7852, 'ST': 6935, 'EWS': 2800, 'PwD': 10000},
+                'Knitwear Design': {'General': 1351, 'OBC': 3989, 'SC': 8327, 'ST': 8936, 'EWS': 3000, 'PwD': 10500},
+                'Textile Design': {'General': 1090, 'OBC': 3949, 'SC': 8662, 'ST': 8302, 'EWS': 2900, 'PwD': 10300}
+            },
+            '2022': {
+                'Fashion Design': {'General': 470, 'OBC': 1450, 'SC': 2600, 'ST': 3000, 'EWS': 1000, 'PwD': 9000},
+                'Fashion Comm.': {'General': 490, 'OBC': 3300, 'SC': 4850, 'ST': 4100, 'EWS': 2100, 'PwD': 9300},
+                'Accessory Design': {'General': 4100, 'OBC': 3800, 'SC': 7900, 'ST': 7000, 'EWS': 2900, 'PwD': 10100},
+                'Knitwear Design': {'General': 1400, 'OBC': 4000, 'SC': 8400, 'ST': 9000, 'EWS': 3100, 'PwD': 10600},
+                'Textile Design': {'General': 1120, 'OBC': 4000, 'SC': 8700, 'ST': 8400, 'EWS': 3000, 'PwD': 10400}
+            },
+            '2021': {
+                'Fashion Design': {'General': 490, 'OBC': 1500, 'SC': 2700, 'ST': 3100, 'EWS': 1050, 'PwD': 9200},
+                'Fashion Comm.': {'General': 510, 'OBC': 3400, 'SC': 4950, 'ST': 4200, 'EWS': 2200, 'PwD': 9500},
+                'Accessory Design': {'General': 4200, 'OBC': 3900, 'SC': 8000, 'ST': 7100, 'EWS': 3000, 'PwD': 10300},
+                'Knitwear Design': {'General': 1450, 'OBC': 4100, 'SC': 8500, 'ST': 9100, 'EWS': 3200, 'PwD': 10800},
+                'Textile Design': {'General': 1150, 'OBC': 4100, 'SC': 8800, 'ST': 8500, 'EWS': 3100, 'PwD': 10600}
+            }
+        },
+        'Gandhinagar': {
+            '2025': {
+                'Fashion Design': {'General': 350, 'OBC': 3150, 'SC': 1600, 'ST': 1200, 'EWS': 2100, 'PwD': 8400},
+                'Fashion Comm.': {'General': 700, 'OBC': 3800, 'SC': 4400, 'ST': 3000, 'EWS': 2700, 'PwD': 8700},
+                'Textile Design': {'General': 1100, 'OBC': 3500, 'SC': 3200, 'ST': 3700, 'EWS': 2500, 'PwD': 8600},
+                'Accessory Design': {'General': 750, 'OBC': 3400, 'SC': 3450, 'ST': 4400, 'EWS': 2400, 'PwD': 8500}
+            },
+            '2024': {
+                'Fashion Design': {'General': 355, 'OBC': 3200, 'SC': 1630, 'ST': 1220, 'EWS': 2150, 'PwD': 8450},
+                'Fashion Comm.': {'General': 710, 'OBC': 3850, 'SC': 4450, 'ST': 3050, 'EWS': 2750, 'PwD': 8750},
+                'Textile Design': {'General': 1120, 'OBC': 3550, 'SC': 3250, 'ST': 3750, 'EWS': 2550, 'PwD': 8650},
+                'Accessory Design': {'General': 760, 'OBC': 3450, 'SC': 3500, 'ST': 4450, 'EWS': 2450, 'PwD': 8550}
+            },
+            '2023': {
+                'Fashion Design': {'General': 362, 'OBC': 3272, 'SC': 1669, 'ST': 1255, 'EWS': 2200, 'PwD': 8500},
+                'Fashion Comm.': {'General': 725, 'OBC': 3919, 'SC': 4534, 'ST': 3102, 'EWS': 2800, 'PwD': 8800},
+                'Textile Design': {'General': 1166, 'OBC': 3639, 'SC': 3331, 'ST': 3791, 'EWS': 2600, 'PwD': 8700},
+                'Accessory Design': {'General': 790, 'OBC': 3515, 'SC': 3591, 'ST': 4563, 'EWS': 2500, 'PwD': 8600}
+            },
+            '2022': {
+                'Fashion Design': {'General': 380, 'OBC': 3300, 'SC': 1700, 'ST': 1300, 'EWS': 2300, 'PwD': 8600},
+                'Fashion Comm.': {'General': 750, 'OBC': 3950, 'SC': 4600, 'ST': 3200, 'EWS': 2900, 'PwD': 8900},
+                'Textile Design': {'General': 1200, 'OBC': 3700, 'SC': 3400, 'ST': 3850, 'EWS': 2700, 'PwD': 8800},
+                'Accessory Design': {'General': 800, 'OBC': 3550, 'SC': 3650, 'ST': 4600, 'EWS': 2600, 'PwD': 8700}
+            },
+            '2021': {
+                'Fashion Design': {'General': 400, 'OBC': 3400, 'SC': 1750, 'ST': 1350, 'EWS': 2400, 'PwD': 8800},
+                'Fashion Comm.': {'General': 780, 'OBC': 4050, 'SC': 4700, 'ST': 3300, 'EWS': 3000, 'PwD': 9000},
+                'Textile Design': {'General': 1250, 'OBC': 3800, 'SC': 3500, 'ST': 3950, 'EWS': 2800, 'PwD': 8900},
+                'Accessory Design': {'General': 820, 'OBC': 3650, 'SC': 3750, 'ST': 4700, 'EWS': 2700, 'PwD': 8800}
+            }
+        },
+        'Bengaluru': {
+            '2025': {
+                'Fashion Design': {'General': 500, 'OBC': 750, 'SC': 1900, 'ST': 2450, 'EWS': 450, 'PwD': 7400},
+                'Fashion Comm.': {'General': 100, 'OBC': 550, 'SC': 1950, 'ST': 1900, 'EWS': 350, 'PwD': 7700},
+                'Accessory Design': {'General': 450, 'OBC': 120, 'SC': 4100, 'ST': 7100, 'EWS': 180, 'PwD': 7900},
+                'Knitwear Design': {'General': 1050, 'OBC': 2550, 'SC': 5300, 'ST': 6850, 'EWS': 1700, 'PwD': 8400},
+                'Textile Design': {'General': 700, 'OBC': 2600, 'SC': 3850, 'ST': 7250, 'EWS': 1800, 'PwD': 8100}
+            },
+            '2024': {
+                'Fashion Design': {'General': 510, 'OBC': 770, 'SC': 1950, 'ST': 2500, 'EWS': 480, 'PwD': 7450},
+                'Fashion Comm.': {'General': 115, 'OBC': 580, 'SC': 2000, 'ST': 1950, 'EWS': 380, 'PwD': 7750},
+                'Accessory Design': {'General': 460, 'OBC': 125, 'SC': 4150, 'ST': 7150, 'EWS': 190, 'PwD': 7950},
+                'Knitwear Design': {'General': 1080, 'OBC': 2600, 'SC': 5350, 'ST': 6900, 'EWS': 1750, 'PwD': 8450},
+                'Textile Design': {'General': 710, 'OBC': 2650, 'SC': 3900, 'ST': 7300, 'EWS': 1850, 'PwD': 8150}
+            },
+            '2023': {
+                'Fashion Design': {'General': 520, 'OBC': 799, 'SC': 2000, 'ST': 2570, 'EWS': 500, 'PwD': 7500},
+                'Fashion Comm.': {'General': 113, 'OBC': 600, 'SC': 2068, 'ST': 2017, 'EWS': 400, 'PwD': 7800},
+                'Accessory Design': {'General': 482, 'OBC': 133, 'SC': 4214, 'ST': 7286, 'EWS': 200, 'PwD': 8000},
+                'Knitwear Design': {'General': 1122, 'OBC': 2667, 'SC': 5437, 'ST': 6986, 'EWS': 1800, 'PwD': 8500},
+                'Textile Design': {'General': 721, 'OBC': 2705, 'SC': 3990, 'ST': 7374, 'EWS': 1900, 'PwD': 8200}
+            },
+            '2022': {
+                'Fashion Design': {'General': 550, 'OBC': 820, 'SC': 2050, 'ST': 2600, 'EWS': 550, 'PwD': 7600},
+                'Fashion Comm.': {'General': 130, 'OBC': 620, 'SC': 2100, 'ST': 2050, 'EWS': 450, 'PwD': 7900},
+                'Accessory Design': {'General': 500, 'OBC': 150, 'SC': 4300, 'ST': 7300, 'EWS': 250, 'PwD': 8100},
+                'Knitwear Design': {'General': 1150, 'OBC': 2700, 'SC': 5500, 'ST': 7000, 'EWS': 1900, 'PwD': 8600},
+                'Textile Design': {'General': 750, 'OBC': 2750, 'SC': 4050, 'ST': 7400, 'EWS': 2000, 'PwD': 8300}
+            },
+            '2021': {
+                'Fashion Design': {'General': 580, 'OBC': 850, 'SC': 2100, 'ST': 2700, 'EWS': 600, 'PwD': 7800},
+                'Fashion Comm.': {'General': 150, 'OBC': 650, 'SC': 2200, 'ST': 2100, 'EWS': 500, 'PwD': 8100},
+                'Accessory Design': {'General': 530, 'OBC': 180, 'SC': 4400, 'ST': 7400, 'EWS': 280, 'PwD': 8300},
+                'Knitwear Design': {'General': 1200, 'OBC': 2800, 'SC': 5600, 'ST': 7100, 'EWS': 2000, 'PwD': 8800},
+                'Textile Design': {'General': 780, 'OBC': 2850, 'SC': 4100, 'ST': 7500, 'EWS': 2100, 'PwD': 8500}
+            }
+        },
+        'Chennai': {
+            '2025': {
+                'Fashion Design': {'General': 450, 'OBC': 1500, 'SC': 3300, 'ST': 3050, 'EWS': 950, 'PwD': 8700},
+                'Fashion Comm.': {'General': 250, 'OBC': 950, 'SC': 4000, 'ST': 4800, 'EWS': 650, 'PwD': 8900},
+                'Accessory Design': {'General': 850, 'OBC': 2300, 'SC': 8100, 'ST': 8200, 'EWS': 1400, 'PwD': 9900},
+                'Leather Design': {'General': 2200, 'OBC': 3650, 'SC': 8600, 'ST': 8900, 'EWS': 2400, 'PwD': 10400},
+                'Knitwear Design': {'General': 1400, 'OBC': 3150, 'SC': 6900, 'ST': 7400, 'EWS': 2100, 'PwD': 9700},
+                'Textile Design': {'General': 1450, 'OBC': 2800, 'SC': 7000, 'ST': 7700, 'EWS': 1900, 'PwD': 9400}
+            },
+            '2024': {
+                'Fashion Design': {'General': 465, 'OBC': 1520, 'SC': 3350, 'ST': 3100, 'EWS': 980, 'PwD': 8750},
+                'Fashion Comm.': {'General': 265, 'OBC': 970, 'SC': 4050, 'ST': 4850, 'EWS': 680, 'PwD': 8950},
+                'Accessory Design': {'General': 870, 'OBC': 2340, 'SC': 8150, 'ST': 8250, 'EWS': 1450, 'PwD': 9950},
+                'Leather Design': {'General': 2250, 'OBC': 3700, 'SC': 8650, 'ST': 8950, 'EWS': 2450, 'PwD': 10450},
+                'Knitwear Design': {'General': 1440, 'OBC': 3200, 'SC': 6950, 'ST': 7450, 'EWS': 2150, 'PwD': 9750},
+                'Textile Design': {'General': 1480, 'OBC': 2850, 'SC': 7050, 'ST': 7750, 'EWS': 1950, 'PwD': 9450}
+            },
+            '2023': {
+                'Fashion Design': {'General': 484, 'OBC': 1552, 'SC': 3417, 'ST': 3165, 'EWS': 1000, 'PwD': 8800},
+                'Fashion Comm.': {'General': 276, 'OBC': 990, 'SC': 4110, 'ST': 4951, 'EWS': 700, 'PwD': 9000},
+                'Accessory Design': {'General': 890, 'OBC': 2384, 'SC': 8238, 'ST': 8350, 'EWS': 1500, 'PwD': 10000},
+                'Leather Design': {'General': 2334, 'OBC': 3752, 'SC': 8704, 'ST': 9000, 'EWS': 2500, 'PwD': 10500},
+                'Knitwear Design': {'General': 1493, 'OBC': 3263, 'SC': 7033, 'ST': 7500, 'EWS': 2200, 'PwD': 9800},
+                'Textile Design': {'General': 1507, 'OBC': 2896, 'SC': 7104, 'ST': 7800, 'EWS': 2000, 'PwD': 9500}
+            },
+            '2022': {
+                'Fashion Design': {'General': 500, 'OBC': 1600, 'SC': 3500, 'ST': 3200, 'EWS': 1100, 'PwD': 8900},
+                'Fashion Comm.': {'General': 290, 'OBC': 1050, 'SC': 4200, 'ST': 5000, 'EWS': 750, 'PwD': 9100},
+                'Accessory Design': {'General': 920, 'OBC': 2450, 'SC': 8300, 'ST': 8400, 'EWS': 1600, 'PwD': 10100},
+                'Leather Design': {'General': 2400, 'OBC': 3800, 'SC': 8800, 'ST': 9100, 'EWS': 2600, 'PwD': 10600},
+                'Knitwear Design': {'General': 1550, 'OBC': 3300, 'SC': 7100, 'ST': 7600, 'EWS': 2300, 'PwD': 9900},
+                'Textile Design': {'General': 1580, 'OBC': 2950, 'SC': 7200, 'ST': 7900, 'EWS': 2100, 'PwD': 9600}
+            },
+            '2021': {
+                'Fashion Design': {'General': 530, 'OBC': 1650, 'SC': 3600, 'ST': 3300, 'EWS': 1200, 'PwD': 9000},
+                'Fashion Comm.': {'General': 320, 'OBC': 1100, 'SC': 4300, 'ST': 5100, 'EWS': 800, 'PwD': 9300},
+                'Accessory Design': {'General': 950, 'OBC': 2500, 'SC': 8400, 'ST': 8500, 'EWS': 1700, 'PwD': 10300},
+                'Leather Design': {'General': 2500, 'OBC': 3900, 'SC': 8900, 'ST': 9200, 'EWS': 2700, 'PwD': 10800},
+                'Knitwear Design': {'General': 1600, 'OBC': 3400, 'SC': 7200, 'ST': 7700, 'EWS': 2400, 'PwD': 10100},
+                'Textile Design': {'General': 1650, 'OBC': 3000, 'SC': 7300, 'ST': 8000, 'EWS': 2200, 'PwD': 9800}
+            }
+        },
+        'Bhopal': {
+            '2025': {
+                'Fashion Design': {'General': 2700, 'OBC': 3400, 'SC': 5900, 'ST': 7400, 'EWS': 2700, 'PwD': 9900},
+                'Fashion Comm.': {'General': 3200, 'OBC': 3900, 'SC': 6400, 'ST': 7900, 'EWS': 3100, 'PwD': 10400},
+                'Accessory Design': {'General': 4000, 'OBC': 4900, 'SC': 7900, 'ST': 8900, 'EWS': 3900, 'PwD': 10900}
+            },
+            '2024': {
+                'Fashion Design': {'General': 2750, 'OBC': 3450, 'SC': 5950, 'ST': 7450, 'EWS': 2750, 'PwD': 9950},
+                'Fashion Comm.': {'General': 3250, 'OBC': 3950, 'SC': 6450, 'ST': 7950, 'EWS': 3150, 'PwD': 10450},
+                'Accessory Design': {'General': 4050, 'OBC': 4950, 'SC': 7950, 'ST': 8950, 'EWS': 3950, 'PwD': 10950}
+            },
+            '2023': {
+                'Fashion Design': {'General': 2800, 'OBC': 3500, 'SC': 6000, 'ST': 7500, 'EWS': 2800, 'PwD': 10000},
+                'Fashion Comm.': {'General': 3300, 'OBC': 4000, 'SC': 6500, 'ST': 8000, 'EWS': 3200, 'PwD': 10500},
+                'Accessory Design': {'General': 4100, 'OBC': 5000, 'SC': 8000, 'ST': 9000, 'EWS': 4000, 'PwD': 11000}
+            },
+            '2022': {
+                'Fashion Design': {'General': 2900, 'OBC': 3550, 'SC': 6100, 'ST': 7600, 'EWS': 2900, 'PwD': 10100},
+                'Fashion Comm.': {'General': 3400, 'OBC': 4100, 'SC': 6600, 'ST': 8100, 'EWS': 3300, 'PwD': 10600},
+                'Accessory Design': {'General': 4200, 'OBC': 5100, 'SC': 8100, 'ST': 9100, 'EWS': 4100, 'PwD': 11100}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3000, 'OBC': 3650, 'SC': 6200, 'ST': 7700, 'EWS': 3000, 'PwD': 10200},
+                'Fashion Comm.': {'General': 3500, 'OBC': 4200, 'SC': 6700, 'ST': 8200, 'EWS': 3400, 'PwD': 10700},
+                'Accessory Design': {'General': 4300, 'OBC': 5200, 'SC': 8200, 'ST': 9200, 'EWS': 4200, 'PwD': 11200}
+            }
+        },
+        'Bhubaneswar': {
+            '2025': {
+                'Fashion Design': {'General': 2000, 'OBC': 2700, 'SC': 5400, 'ST': 6900, 'EWS': 1900, 'PwD': 8900},
+                'Fashion Comm.': {'General': 2500, 'OBC': 3200, 'SC': 5900, 'ST': 7400, 'EWS': 2400, 'PwD': 9400},
+                'Textile Design': {'General': 3500, 'OBC': 4400, 'SC': 6900, 'ST': 8400, 'EWS': 3400, 'PwD': 9900}
+            },
+            '2024': {
+                'Fashion Design': {'General': 2050, 'OBC': 2750, 'SC': 5450, 'ST': 6950, 'EWS': 1950, 'PwD': 8950},
+                'Fashion Comm.': {'General': 2550, 'OBC': 3250, 'SC': 5950, 'ST': 7450, 'EWS': 2450, 'PwD': 9450},
+                'Textile Design': {'General': 3550, 'OBC': 4450, 'SC': 6950, 'ST': 8450, 'EWS': 3450, 'PwD': 9950}
+            },
+            '2023': {
+                'Fashion Design': {'General': 2090, 'OBC': 2800, 'SC': 5500, 'ST': 7000, 'EWS': 2000, 'PwD': 9000},
+                'Fashion Comm.': {'General': 2600, 'OBC': 3300, 'SC': 6000, 'ST': 7500, 'EWS': 2500, 'PwD': 9500},
+                'Textile Design': {'General': 3600, 'OBC': 4500, 'SC': 7000, 'ST': 8500, 'EWS': 3500, 'PwD': 10000}
+            },
+            '2022': {
+                'Fashion Design': {'General': 2150, 'OBC': 2850, 'SC': 5600, 'ST': 7100, 'EWS': 2100, 'PwD': 9100},
+                'Fashion Comm.': {'General': 2650, 'OBC': 3350, 'SC': 6100, 'ST': 7600, 'EWS': 2600, 'PwD': 9600},
+                'Textile Design': {'General': 3700, 'OBC': 4600, 'SC': 7100, 'ST': 8600, 'EWS': 3600, 'PwD': 10100}
+            },
+            '2021': {
+                'Fashion Design': {'General': 2250, 'OBC': 2950, 'SC': 5700, 'ST': 7200, 'EWS': 2200, 'PwD': 9200},
+                'Fashion Comm.': {'General': 2750, 'OBC': 3450, 'SC': 6200, 'ST': 7700, 'EWS': 2700, 'PwD': 9700},
+                'Textile Design': {'General': 3800, 'OBC': 4700, 'SC': 7200, 'ST': 8700, 'EWS': 3700, 'PwD': 10200}
+            }
+        },
+        'Jodhpur': {
+            '2025': {
+                'Fashion Design': {'General': 3200, 'OBC': 3900, 'SC': 6700, 'ST': 8100, 'EWS': 3100, 'PwD': 10400},
+                'Textile Design': {'General': 4000, 'OBC': 4900, 'SC': 7400, 'ST': 8900, 'EWS': 3900, 'PwD': 10900}
+            },
+            '2024': {
+                'Fashion Design': {'General': 3250, 'OBC': 3950, 'SC': 6750, 'ST': 8150, 'EWS': 3150, 'PwD': 10450},
+                'Textile Design': {'General': 4050, 'OBC': 4950, 'SC': 7450, 'ST': 8950, 'EWS': 3950, 'PwD': 10950}
+            },
+            '2023': {
+                'Fashion Design': {'General': 3300, 'OBC': 4000, 'SC': 6800, 'ST': 8200, 'EWS': 3200, 'PwD': 10500},
+                'Textile Design': {'General': 4100, 'OBC': 5000, 'SC': 7500, 'ST': 9000, 'EWS': 4000, 'PwD': 11000}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3400, 'OBC': 4050, 'SC': 6900, 'ST': 8300, 'EWS': 3300, 'PwD': 10600},
+                'Textile Design': {'General': 4200, 'OBC': 5100, 'SC': 7600, 'ST': 9100, 'EWS': 4100, 'PwD': 11100}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3500, 'OBC': 4150, 'SC': 7000, 'ST': 8400, 'EWS': 3400, 'PwD': 10700},
+                'Textile Design': {'General': 4300, 'OBC': 5200, 'SC': 7700, 'ST': 9200, 'EWS': 4200, 'PwD': 11200}
+            }
+        },
+        'Kangra': {
+            '2025': {
+                'Fashion Design': {'General': 3000, 'OBC': 3700, 'SC': 6100, 'ST': 7700, 'EWS': 2900, 'PwD': 9900},
+                'Fashion Comm.': {'General': 3400, 'OBC': 4100, 'SC': 6600, 'ST': 8200, 'EWS': 3300, 'PwD': 10400}
+            },
+            '2024': {
+                'Fashion Design': {'General': 3050, 'OBC': 3750, 'SC': 6150, 'ST': 7750, 'EWS': 2950, 'PwD': 9950},
+                'Fashion Comm.': {'General': 3450, 'OBC': 4150, 'SC': 6650, 'ST': 8250, 'EWS': 3350, 'PwD': 10450}
+            },
+            '2023': {
+                'Fashion Design': {'General': 3100, 'OBC': 3800, 'SC': 6200, 'ST': 7800, 'EWS': 3000, 'PwD': 10000},
+                'Fashion Comm.': {'General': 3500, 'OBC': 4200, 'SC': 6700, 'ST': 8300, 'EWS': 3400, 'PwD': 10500}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3200, 'OBC': 3850, 'SC': 6300, 'ST': 7900, 'EWS': 3100, 'PwD': 10100},
+                'Fashion Comm.': {'General': 3600, 'OBC': 4300, 'SC': 6800, 'ST': 8400, 'EWS': 3500, 'PwD': 10600}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3300, 'OBC': 3950, 'SC': 6400, 'ST': 8000, 'EWS': 3200, 'PwD': 10200},
+                'Fashion Comm.': {'General': 3700, 'OBC': 4400, 'SC': 6900, 'ST': 8500, 'EWS': 3600, 'PwD': 10700}
+            }
+        },
+        'Kannur': {
+            '2025': {
+                'Fashion Design': {'General': 2200, 'OBC': 2900, 'SC': 5700, 'ST': 7100, 'EWS': 2200, 'PwD': 9100},
+                'Textile Design': {'General': 3800, 'OBC': 4700, 'SC': 7200, 'ST': 8700, 'EWS': 3700, 'PwD': 10200}
+            },
+            '2024': {
+                'Fashion Design': {'General': 2250, 'OBC': 2950, 'SC': 5750, 'ST': 7150, 'EWS': 2250, 'PwD': 9150},
+                'Textile Design': {'General': 3850, 'OBC': 4750, 'SC': 7250, 'ST': 8750, 'EWS': 3750, 'PwD': 10250}
+            },
+            '2023': {
+                'Fashion Design': {'General': 2300, 'OBC': 3000, 'SC': 5800, 'ST': 7200, 'EWS': 2300, 'PwD': 9200},
+                'Textile Design': {'General': 3900, 'OBC': 4800, 'SC': 7300, 'ST': 8800, 'EWS': 3800, 'PwD': 10300}
+            },
+            '2022': {
+                'Fashion Design': {'General': 2400, 'OBC': 3050, 'SC': 5900, 'ST': 7300, 'EWS': 2400, 'PwD': 9300},
+                'Textile Design': {'General': 4000, 'OBC': 4900, 'SC': 7400, 'ST': 8900, 'EWS': 3900, 'PwD': 10400}
+            },
+            '2021': {
+                'Fashion Design': {'General': 2500, 'OBC': 3150, 'SC': 6000, 'ST': 7400, 'EWS': 2500, 'PwD': 9400},
+                'Textile Design': {'General': 4100, 'OBC': 5000, 'SC': 7500, 'ST': 9000, 'EWS': 4000, 'PwD': 10500}
+            }
+        },
+        'Patna': {
+            '2025': {
+                'Fashion Design': {'General': 2900, 'OBC': 3600, 'SC': 6000, 'ST': 7600, 'EWS': 2800, 'PwD': 10100},
+                'Fashion Comm.': {'General': 3300, 'OBC': 4000, 'SC': 6500, 'ST': 8000, 'EWS': 3200, 'PwD': 10600}
+            },
+            '2024': {
+                'Fashion Design': {'General': 2950, 'OBC': 3650, 'SC': 6050, 'ST': 7650, 'EWS': 2850, 'PwD': 10150},
+                'Fashion Comm.': {'General': 3350, 'OBC': 4050, 'SC': 6550, 'ST': 8050, 'EWS': 3250, 'PwD': 10650}
+            },
+            '2023': {
+                'Fashion Design': {'General': 3000, 'OBC': 3700, 'SC': 6100, 'ST': 7700, 'EWS': 2900, 'PwD': 10200},
+                'Fashion Comm.': {'General': 3400, 'OBC': 4100, 'SC': 6600, 'ST': 8100, 'EWS': 3300, 'PwD': 10700}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3100, 'OBC': 3750, 'SC': 6200, 'ST': 7800, 'EWS': 3000, 'PwD': 10300},
+                'Fashion Comm.': {'General': 3500, 'OBC': 4150, 'SC': 6700, 'ST': 8200, 'EWS': 3400, 'PwD': 10800}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3200, 'OBC': 3850, 'SC': 6300, 'ST': 7900, 'EWS': 3100, 'PwD': 10400},
+                'Fashion Comm.': {'General': 3600, 'OBC': 4250, 'SC': 6800, 'ST': 8300, 'EWS': 3500, 'PwD': 10900}
+            }
+        },
+        'Raebareli': {
+            '2025': {
+                'Fashion Design': {'General': 3100, 'OBC': 3800, 'SC': 6200, 'ST': 7800, 'EWS': 3000, 'PwD': 10300},
+                'Textile Design': {'General': 3900, 'OBC': 4800, 'SC': 7300, 'ST': 8800, 'EWS': 3800, 'PwD': 10800}
+            },
+            '2024': {
+                'Fashion Design': {'General': 3150, 'OBC': 3850, 'SC': 6250, 'ST': 7850, 'EWS': 3050, 'PwD': 10350},
+                'Textile Design': {'General': 3950, 'OBC': 4850, 'SC': 7350, 'ST': 8850, 'EWS': 3850, 'PwD': 10850}
+            },
+            '2023': {
+                'Fashion Design': {'General': 3200, 'OBC': 3900, 'SC': 6300, 'ST': 7900, 'EWS': 3100, 'PwD': 10400},
+                'Textile Design': {'General': 4000, 'OBC': 4900, 'SC': 7400, 'ST': 8900, 'EWS': 3900, 'PwD': 10900}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3300, 'OBC': 3950, 'SC': 6400, 'ST': 8000, 'EWS': 3200, 'PwD': 10500},
+                'Textile Design': {'General': 4100, 'OBC': 4950, 'SC': 7500, 'ST': 9000, 'EWS': 4000, 'PwD': 11000}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3400, 'OBC': 4050, 'SC': 6500, 'ST': 8100, 'EWS': 3300, 'PwD': 10600},
+                'Textile Design': {'General': 4200, 'OBC': 5050, 'SC': 7600, 'ST': 9100, 'EWS': 4100, 'PwD': 11100}
+            }
+        },
+        'Shillong': {
+            '2025': {
+                'Fashion Design': {'General': 3400, 'OBC': 4100, 'SC': 6800, 'ST': 8300, 'EWS': 3300, 'PwD': 10700},
+                'Fashion Comm.': {'General': 3700, 'OBC': 4400, 'SC': 7100, 'ST': 8600, 'EWS': 3600, 'PwD': 11100}
+            },
+            '2024': {
+                'Fashion Design': {'General': 3450, 'OBC': 4150, 'SC': 6850, 'ST': 8350, 'EWS': 3350, 'PwD': 10750},
+                'Fashion Comm.': {'General': 3750, 'OBC': 4450, 'SC': 7150, 'ST': 8650, 'EWS': 3650, 'PwD': 11150}
+            },
+            '2023': {
+                'Fashion Design': {'General': 3500, 'OBC': 4200, 'SC': 6900, 'ST': 8400, 'EWS': 3400, 'PwD': 10800},
+                'Fashion Comm.': {'General': 3800, 'OBC': 4500, 'SC': 7200, 'ST': 8700, 'EWS': 3700, 'PwD': 11200}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3600, 'OBC': 4250, 'SC': 7000, 'ST': 8500, 'EWS': 3500, 'PwD': 10900},
+                'Fashion Comm.': {'General': 3900, 'OBC': 4550, 'SC': 7300, 'ST': 8800, 'EWS': 3800, 'PwD': 11300}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3700, 'OBC': 4350, 'SC': 7100, 'ST': 8600, 'EWS': 3600, 'PwD': 11000},
+                'Fashion Comm.': {'General': 4000, 'OBC': 4650, 'SC': 7400, 'ST': 8900, 'EWS': 3900, 'PwD': 11400}
+            }
+        },
+        'Srinagar': {
+            '2025': {
+                'Fashion Design': {'General': 3600, 'OBC': 4400, 'SC': 6900, 'ST': 8400, 'EWS': 3500, 'PwD': 10900},
+                'Textile Design': {'General': 4300, 'OBC': 5100, 'SC': 7700, 'ST': 9100, 'EWS': 4100, 'PwD': 11400}
+            },
+            '2024': {
+                'Fashion Design': {'General': 3650, 'OBC': 4450, 'SC': 6950, 'ST': 8450, 'EWS': 3550, 'PwD': 10950},
+                'Textile Design': {'General': 4350, 'OBC': 5150, 'SC': 7750, 'ST': 9150, 'EWS': 4150, 'PwD': 11450}
+            },
+            '2023': {
+                'Fashion Design': {'General': 3700, 'OBC': 4500, 'SC': 7000, 'ST': 8500, 'EWS': 3600, 'PwD': 11000},
+                'Textile Design': {'General': 4400, 'OBC': 5200, 'SC': 7800, 'ST': 9200, 'EWS': 4200, 'PwD': 11500}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3800, 'OBC': 4550, 'SC': 7100, 'ST': 8600, 'EWS': 3700, 'PwD': 11100},
+                'Textile Design': {'General': 4500, 'OBC': 5250, 'SC': 7900, 'ST': 9300, 'EWS': 4300, 'PwD': 11600}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3900, 'OBC': 4650, 'SC': 7200, 'ST': 8700, 'EWS': 3800, 'PwD': 11200},
+                'Textile Design': {'General': 4600, 'OBC': 5350, 'SC': 8000, 'ST': 9400, 'EWS': 4400, 'PwD': 11700}
+            }
+        },
+        'Delhi': {
+            '2025': {
+                'Fashion Design': {'General': 400, 'OBC': 450, 'SC': 1450, 'ST': 1900, 'EWS': 280, 'PwD': 5900},
+                'Fashion Comm.': {'General': 350, 'OBC': 380, 'SC': 1150, 'ST': 1700, 'EWS': 230, 'PwD': 5400},
+                'Leather Design': {'General': 900, 'OBC': 950, 'SC': 2400, 'ST': 2900, 'EWS': 650, 'PwD': 6900}
+            },
+            '2024': {
+                'Fashion Design': {'General': 420, 'OBC': 480, 'SC': 1480, 'ST': 1950, 'EWS': 290, 'PwD': 5950},
+                'Fashion Comm.': {'General': 360, 'OBC': 390, 'SC': 1180, 'ST': 1750, 'EWS': 240, 'PwD': 5450},
+                'Leather Design': {'General': 920, 'OBC': 980, 'SC': 2450, 'ST': 2950, 'EWS': 680, 'PwD': 6950}
+            },
+            '2023': {
+                'Fashion Design': {'General': 500, 'OBC': 500, 'SC': 1500, 'ST': 2000, 'EWS': 300, 'PwD': 6000},
+                'Fashion Comm.': {'General': 400, 'OBC': 400, 'SC': 1200, 'ST': 1800, 'EWS': 250, 'PwD': 5500},
+                'Leather Design': {'General': 1000, 'OBC': 1000, 'SC': 2500, 'ST': 3000, 'EWS': 700, 'PwD': 7000}
+            },
+            '2022': {
+                'Fashion Design': {'General': 520, 'OBC': 520, 'SC': 1550, 'ST': 2050, 'EWS': 320, 'PwD': 6100},
+                'Fashion Comm.': {'General': 420, 'OBC': 420, 'SC': 1250, 'ST': 1850, 'EWS': 270, 'PwD': 5600},
+                'Leather Design': {'General': 1050, 'OBC': 1050, 'SC': 2550, 'ST': 3050, 'EWS': 720, 'PwD': 7100}
+            },
+            '2021': {
+                'Fashion Design': {'General': 550, 'OBC': 550, 'SC': 1600, 'ST': 2100, 'EWS': 350, 'PwD': 6200},
+                'Fashion Comm.': {'General': 450, 'OBC': 450, 'SC': 1300, 'ST': 1900, 'EWS': 300, 'PwD': 5700},
+                'Leather Design': {'General': 1100, 'OBC': 1100, 'SC': 2600, 'ST': 3100, 'EWS': 750, 'PwD': 7200}
+            }
+        },
+        'Mumbai': {
+            '2025': {
+                'Fashion Design': {'General': 500, 'OBC': 550, 'SC': 1700, 'ST': 2100, 'EWS': 320, 'PwD': 6400},
+                'Fashion Comm.': {'General': 450, 'OBC': 480, 'SC': 1500, 'ST': 1900, 'EWS': 270, 'PwD': 6100},
+                'Accessory Design': {'General': 700, 'OBC': 750, 'SC': 1900, 'ST': 2400, 'EWS': 500, 'PwD': 6700}
+            },
+            '2024': {
+                'Fashion Design': {'General': 520, 'OBC': 580, 'SC': 1750, 'ST': 2150, 'EWS': 335, 'PwD': 6450},
+                'Fashion Comm.': {'General': 460, 'OBC': 490, 'SC': 1550, 'ST': 1950, 'EWS': 285, 'PwD': 6150},
+                'Accessory Design': {'General': 730, 'OBC': 780, 'SC': 1950, 'ST': 2450, 'EWS': 525, 'PwD': 6750}
+            },
+            '2023': {
+                'Fashion Design': {'General': 600, 'OBC': 600, 'SC': 1800, 'ST': 2200, 'EWS': 350, 'PwD': 6500},
+                'Fashion Comm.': {'General': 500, 'OBC': 500, 'SC': 1600, 'ST': 2000, 'EWS': 300, 'PwD': 6200},
+                'Accessory Design': {'General': 800, 'OBC': 800, 'SC': 2000, 'ST': 2500, 'EWS': 550, 'PwD': 6800}
+            },
+            '2022': {
+                'Fashion Design': {'General': 620, 'OBC': 620, 'SC': 1850, 'ST': 2250, 'EWS': 370, 'PwD': 6600},
+                'Fashion Comm.': {'General': 520, 'OBC': 520, 'SC': 1650, 'ST': 2050, 'EWS': 320, 'PwD': 6300},
+                'Accessory Design': {'General': 820, 'OBC': 820, 'SC': 2050, 'ST': 2550, 'EWS': 570, 'PwD': 6900}
+            },
+            '2021': {
+                'Fashion Design': {'General': 650, 'OBC': 650, 'SC': 1900, 'ST': 2300, 'EWS': 400, 'PwD': 6700},
+                'Fashion Comm.': {'General': 550, 'OBC': 550, 'SC': 1700, 'ST': 2100, 'EWS': 350, 'PwD': 6400},
+                'Accessory Design': {'General': 850, 'OBC': 850, 'SC': 2100, 'ST': 2600, 'EWS': 600, 'PwD': 7000}
+            }
+        },
+        'Panchkula': {
+            '2025': {
+                'Fashion Design': {'General': 2800, 'OBC': 3500, 'SC': 5900, 'ST': 7400, 'EWS': 2700, 'PwD': 9900},
+                'Textile Design': {'General': 3700, 'OBC': 4600, 'SC': 7100, 'ST': 8600, 'EWS': 3700, 'PwD': 10400}
+            },
+            '2024': {
+                'Fashion Design': {'General': 2850, 'OBC': 3550, 'SC': 5950, 'ST': 7450, 'EWS': 2750, 'PwD': 9950},
+                'Textile Design': {'General': 3750, 'OBC': 4650, 'SC': 7150, 'ST': 8650, 'EWS': 3750, 'PwD': 10450}
+            },
+            '2023': {
+                'Fashion Design': {'General': 2900, 'OBC': 3600, 'SC': 6000, 'ST': 7500, 'EWS': 2800, 'PwD': 10000},
+                'Textile Design': {'General': 3800, 'OBC': 4700, 'SC': 7200, 'ST': 8700, 'EWS': 3800, 'PwD': 10500}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3000, 'OBC': 3650, 'SC': 6100, 'ST': 7600, 'EWS': 2900, 'PwD': 10100},
+                'Textile Design': {'General': 3900, 'OBC': 4750, 'SC': 7300, 'ST': 8800, 'EWS': 3900, 'PwD': 10600}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3100, 'OBC': 3750, 'SC': 6200, 'ST': 7700, 'EWS': 3000, 'PwD': 10200},
+                'Textile Design': {'General': 4000, 'OBC': 4850, 'SC': 7400, 'ST': 8900, 'EWS': 4000, 'PwD': 10700}
+            }
+        },
+        'Daman': {
+            '2025': {
+                'Fashion Design': {'General': 3500, 'OBC': 4200, 'SC': 6900, 'ST': 8500, 'EWS': 3400, 'PwD': 10900},
+                'Fashion Comm.': {'General': 3800, 'OBC': 4500, 'SC': 7200, 'ST': 8700, 'EWS': 3700, 'PwD': 11400}
+            },
+            '2024': {
+                'Fashion Design': {'General': 3550, 'OBC': 4250, 'SC': 6950, 'ST': 8550, 'EWS': 3450, 'PwD': 10950},
+                'Fashion Comm.': {'General': 3850, 'OBC': 4550, 'SC': 7250, 'ST': 8750, 'EWS': 3750, 'PwD': 11450}
+            },
+            '2023': {
+                'Fashion Design': {'General': 3600, 'OBC': 4300, 'SC': 7000, 'ST': 8600, 'EWS': 3500, 'PwD': 11000},
+                'Fashion Comm.': {'General': 3900, 'OBC': 4600, 'SC': 7300, 'ST': 8800, 'EWS': 3800, 'PwD': 11500}
+            },
+            '2022': {
+                'Fashion Design': {'General': 3700, 'OBC': 4350, 'SC': 7100, 'ST': 8700, 'EWS': 3600, 'PwD': 11100},
+                'Fashion Comm.': {'General': 4000, 'OBC': 4650, 'SC': 7400, 'ST': 8900, 'EWS': 3900, 'PwD': 11600}
+            },
+            '2021': {
+                'Fashion Design': {'General': 3800, 'OBC': 4450, 'SC': 7200, 'ST': 8800, 'EWS': 3700, 'PwD': 11200},
+                'Fashion Comm.': {'General': 4100, 'OBC': 4750, 'SC': 7500, 'ST': 9000, 'EWS': 4000, 'PwD': 11700}
+            }
+        },
+        'Varanasi': {
+            '2025': {
+                'Fashion Design': {'General': 2600, 'OBC': 3300, 'SC': 5800, 'ST': 7300, 'EWS': 2600, 'PwD': 9700},
+                'Textile Design': {'General': 3400, 'OBC': 4300, 'SC': 6800, 'ST': 8300, 'EWS': 3500, 'PwD': 10200}
+            },
+            '2024': {
+                'Fashion Design': {'General': 2650, 'OBC': 3350, 'SC': 5850, 'ST': 7350, 'EWS': 2650, 'PwD': 9750},
+                'Textile Design': {'General': 3450, 'OBC': 4350, 'SC': 6850, 'ST': 8350, 'EWS': 3550, 'PwD': 10250}
+            },
+            '2023': {
+                'Fashion Design': {'General': 2700, 'OBC': 3400, 'SC': 5900, 'ST': 7400, 'EWS': 2700, 'PwD': 9800},
+                'Textile Design': {'General': 3500, 'OBC': 4400, 'SC': 6900, 'ST': 8400, 'EWS': 3600, 'PwD': 10300}
+            },
+            '2022': {
+                'Fashion Design': {'General': 2800, 'OBC': 3450, 'SC': 6000, 'ST': 7500, 'EWS': 2800, 'PwD': 9900},
+                'Textile Design': {'General': 3600, 'OBC': 4450, 'SC': 7000, 'ST': 8500, 'EWS': 3700, 'PwD': 10400}
+            },
+            '2021': {
+                'Fashion Design': {'General': 2900, 'OBC': 3550, 'SC': 6100, 'ST': 7600, 'EWS': 2900, 'PwD': 10000},
+                'Textile Design': {'General': 3700, 'OBC': 4550, 'SC': 7100, 'ST': 8600, 'EWS': 3800, 'PwD': 10500}
+            }
+        }
+    };
+    
+    let cutoffChart; // Main bar chart for prospects
+    let trendChart; // Line chart for multi-year trends
+
+    // HTML elements
+    const campusSelect = document.getElementById('campus-select');
+    const yearSelect = document.getElementById('year-select');
+    const programSelect = document.getElementById('program-select'); // Main program select
+    const categoryFilterSelect = document.getElementById('category-filter-select');
+    const applicantCategorySelect = document.getElementById('applicant-category-select'); // Your Actual Category dropdown
+    const cmrInput = document.getElementById('cmr-input');
+    const categoryRankInput = document.getElementById('category-rank-input');
+    const updateRanksButton = document.getElementById('update-ranks-button');
+    const displayCmr = document.getElementById('display-cmr');
+    const displayCategoryRank = document.getElementById('display-category-rank');
+    const currentCategoryRankSpan = document.getElementById('current-category-rank');
+    const chanceIndicator = document.getElementById('chance-indicator');
+    const chanceMessage = document.getElementById('chance-message');
+    const summaryStatisticsDiv = document.getElementById('summary-statistics');
+    const summaryCampusSpan = document.getElementById('summary-campus');
+    const summaryYearSpan = document.getElementById('summary-year');
+    const summaryLowestCategorySpan = document.getElementById('summary-lowest-category');
+    const summaryLowestRankSpan = document.getElementById('summary-lowest-rank');
+    const summaryHighestCategorySpan = document.getElementById('summary-highest-category');
+    const summaryHighestRankSpan = document.getElementById('summary-highest-rank');
+    const infoTooltipIcon = document.querySelector('.info-tooltip svg'); // For tooltip toggle
+
+    // Trend chart specific elements
+    const trendCampusSelect = document.getElementById('trend-campus-select');
+    const trendProgramSelect = document.getElementById('trend-program-select'); // Trend program select
+    const trendCategorySelect = document.getElementById('trend-category-select');
+    const updateTrendButton = document.getElementById('update-trend-button');
+
+    // Department selection elements for "Specializations at a Glance"
+    const departmentSelect = document.getElementById('department-select');
+    const departmentTitle = document.getElementById('department-title');
+    const departmentDescription = document.getElementById('department-description');
+
+    // Data for B.Des Specializations details
+    const bdesSpecializations = {
+        'Accessory Design': {
+            icon: '👜',
+            description: 'Explores the design and production of accessories like footwear, bags, jewelry, and lifestyle products. Combines aesthetics with functionality and market trends.'
+        },
+        'Fashion Communication': {
+            icon: '📣',
+            description: 'Develops skills in fashion journalism, photography, styling, visual merchandising, and graphic design for the fashion industry. Perfect for storytellers and communicators.'
+        },
+        'Fashion Design': {
+            icon: '👗',
+            description: 'Focuses on creativity, garment construction, pattern making, and fashion illustration. Prepares students for roles as fashion designers, stylists, and merchandisers.'
+        },
+        'Fashion Interior': {
+            icon: '🏠',
+            description: 'Applies fashion principles to interior spaces, focusing on aesthetics, functionality, and trend analysis in residential and commercial design contexts.'
+        },
+        'Knitwear Design': {
+            icon: '�',
+            description: 'Specializes in the design, development, and production of knitted garments and products. Covers yarn technology, knitting techniques, and trend forecasting.'
+        },
+        'Leather Design': {
+            icon: '👞',
+            description: 'Focuses on the design and manufacturing of leather goods, including footwear, garments, and other leather products. Emphasizes material knowledge and craftsmanship.'
+        },
+        'Textile Design': {
+            icon: '🧵',
+            description: 'Involves the creation of designs for woven, printed, and surface-patterned textiles for fashion, interiors, and other applications. Combines art with material science.'
+        }
+    };
+
+
+    // Category colors for charts
+    const categoryColorsMap = {
+        'General': '#4CAF50', 
+        'OBC': '#FF5733',
+        'SC': '#33FF57',
+        'ST': '#0096C7',
+        'EWS': '#FFC300',
+        'PwD': '#A020F0'
+    };
+
+    let currentApplicantRank = 0; // Initialize global variable for the applicant's effective rank
+
+
+    // --- Core Functions ---
+
+    // Updates the displayed CMR and Category Ranks from input fields
+    function updateDisplayedRanks() {
+        displayCmr.textContent = cmrInput.value;
+        displayCategoryRank.textContent = categoryRankInput.value;
+
+        const selectedApplicantCategory = applicantCategorySelect.value;
+        // Dynamically choose which rank to use based on the "Your Actual Category" selection
+        if (selectedApplicantCategory === 'General') {
+            currentApplicantRank = parseInt(cmrInput.value, 10);
+            // Update the span to clearly indicate which rank is being used for analysis
+            currentCategoryRankSpan.textContent = `${cmrInput.value} (CMR)`; 
+        } else {
+            currentApplicantRank = parseInt(categoryRankInput.value, 10);
+            // Update the span to clearly indicate which rank is being used for analysis
+            currentCategoryRankSpan.textContent = `${categoryRankInput.value} (Category)`; 
+        }
+    }
+
+    // Calculates and displays admission chances
+    function updateChanceIndicator(campus, year, applicantCategory, applicantRank, selectedProgram) {
+        const campusYearData = cutoffData[campus]?.[year];
+        if (!campusYearData || !applicantCategory) {
+            chanceMessage.textContent = "Please select a campus, year, and your actual category to get an assessment.";
+            chanceIndicator.style.backgroundColor = '#E0F7FA'; // Default light blue
+            chanceIndicator.style.color = '#00796B'; // Default dark cyan
+            return;
+        }
+
+        let programsToAnalyze = [];
+        if (selectedProgram === "All Programs") {
+            // Filter programs to analyze to only those present in the data for this campus/year
+            programsToAnalyze = Object.keys(campusYearData); 
+        } else {
+            // Only analyze the specific selected program
+            if (campusYearData[selectedProgram]) {
+                programsToAnalyze.push(selectedProgram);
+            }
+        }
+
+        let favorablePrograms = [];
+        let borderlinePrograms = [];
+        let unfavorablePrograms = [];
+
+        programsToAnalyze.forEach(program => {
+            // Use the applicantCategory to fetch the correct cutoff for the analysis
+            if (campusYearData[program] && campusYearData[program][applicantCategory] !== undefined) {
+                const cutoff = campusYearData[program][applicantCategory];
+                if (applicantRank <= cutoff) { // Rank is better than or equal to cutoff
+                    if (cutoff - applicantRank <= 100 && cutoff - applicantRank >= 0) { // Within 100 ranks of cutoff
+                         borderlinePrograms.push(program);
+                    } else if (applicantRank < cutoff) { // Strictly better rank
+                        favorablePrograms.push(program);
+                    } else { // Equal rank, treat as borderline
+                        borderlinePrograms.push(program);
+                    }
+                } else { // Rank is worse than cutoff
+                    unfavorablePrograms.push(program);
+                }
+            }
+        });
+        
+        let message = "";
+        let bgColor = '';
+        let textColor = '';
+
+        if (favorablePrograms.length > 0) {
+            message = `Based on your effective rank of ${applicantRank} (${applicantCategory}) and simulated ${year} data for ${campus}, your chances are **High** for programs like: ${favorablePrograms.slice(0, 2).join(', ')}${favorablePrograms.length > 2 ? ' and more.' : '.'}`;
+            bgColor = '#D4EDDA'; // Light Green
+            textColor = '#155724'; // Dark Green
+        } else if (borderlinePrograms.length > 0) {
+            message = `Based on your effective rank of ${applicantRank} (${applicantCategory}) and simulated ${year} data for ${campus}, your chances are **Moderate/Borderline** for programs like: ${borderlinePrograms.slice(0, 2).join(', ')}${borderlinePrograms.length > 2 ? ' and more.' : '.'} Consider 'Floating' during counseling if allotted.`;
+            bgColor = '#FFF3CD'; // Light Yellow
+            textColor = '#856404'; // Dark Yellow
+        } else {
+            message = `Based on your effective rank of ${applicantRank} (${applicantCategory}) and simulated ${year} data for ${campus}, your chances are **Low/Unlikely** for any programs at this campus in this year. You might consider exploring other NIFT campuses or programs.`;
+            bgColor = '#F8D7DA'; // Light Red
+            textColor = '#721C24'; // Dark Red
+        }
+
+        chanceMessage.innerHTML = message;
+        chanceIndicator.style.backgroundColor = bgColor;
+        chanceIndicator.style.color = textColor;
+    }
+
+    // Updates and displays summary statistics for selected campus/year
+    function updateSummaryStatistics(campus, year, selectedProgram) {
+        const campusYearData = cutoffData[campus]?.[year];
+        if (!campusYearData) {
+            summaryStatisticsDiv.classList.add('hidden');
+            return;
+        }
+
+        let lowestRank = Infinity;
+        let lowestCategory = '';
+        let highestRank = 0;
+        let highestCategory = '';
+
+        const allCategories = ['General', 'OBC', 'SC', 'ST', 'EWS', 'PwD'];
+        let programsToConsider = [];
+
+        if (selectedProgram === "All Programs") {
+            programsToConsider = Object.keys(campusYearData);
+        } else {
+            if (campusYearData[selectedProgram]) { // Check if the selected program exists for this campus/year
+                programsToConsider.push(selectedProgram);
+            }
+        }
+
+        for (const program of programsToConsider) {
+            if (campusYearData[program]) {
+                for (const category of allCategories) {
+                    const rank = campusYearData[program][category];
+                    if (rank !== undefined && rank !== null) {
+                        if (rank < lowestRank) {
+                            lowestRank = rank;
+                            lowestCategory = category;
+                        }
+                        if (rank > highestRank) {
+                            highestRank = rank;
+                            highestCategory = category;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (lowestRank === Infinity || highestRank === 0) {
+            summaryStatisticsDiv.classList.add('hidden');
+        } else {
+            summaryCampusSpan.textContent = campus;
+            summaryYearSpan.textContent = year;
+            summaryLowestCategorySpan.textContent = lowestCategory;
+            summaryLowestRankSpan.textContent = lowestRank;
+            summaryHighestCategorySpan.textContent = highestCategory;
+            summaryHighestRankSpan.textContent = highestRank;
+            summaryStatisticsDiv.classList.remove('hidden');
+        }
+    }
+
+    // Populates the program select with ALL possible B.Des programs
+    // This function is now simplified to just populate from the bdesSpecializations list
+    function populateAllProgramsSelect(selectElement) {
+        selectElement.innerHTML = '<option value="All Programs">All Programs</option>'; 
+        const allPossiblePrograms = Object.keys(bdesSpecializations).sort(); 
+        allPossiblePrograms.forEach(program => {
+            const option = document.createElement('option');
+            option.value = program;
+            option.textContent = program;
+            selectElement.appendChild(option);
+        });
+    }
+
+    // Populates the trend program select with programs available for a given campus (or a fallback to all if needed)
+    function populateTrendProgramSelect(campus) {
+        const allProgramsForCampus = new Set();
+        const campusData = cutoffData[campus];
+
+        if (campusData) {
+            for (const year in campusData) {
+                if (campusData.hasOwnProperty(year)) {
+                    Object.keys(campusData[year]).forEach(program => allProgramsForCampus.add(program));
+                }
+            }
+        }
+
+        // Clear existing options for trendProgramSelect
+        trendProgramSelect.innerHTML = ''; 
+        
+        // Add programs specific to the campus, sorted
+        const sortedCampusPrograms = Array.from(allProgramsForCampus).sort();
+        sortedCampusPrograms.forEach(program => {
+            const option = document.createElement('option');
+            option.value = program;
+            option.textContent = program;
+            trendProgramSelect.appendChild(option);
+        });
+
+        // Fallback: If no specific programs found for campus in cutoffData, add all general B.Des specializations
+        // This ensures the dropdown is always populated with options.
+        if (sortedCampusPrograms.length === 0) {
+            populateAllProgramsSelect(trendProgramSelect); // Reuses the populateAllProgramsSelect logic
+        } else {
+             // Try to select "Fashion Design" by default, or the first available option if Fashion Design isn't there
+            if (sortedCampusPrograms.includes("Fashion Design")) {
+                trendProgramSelect.value = "Fashion Design";
+            } else {
+                trendProgramSelect.value = sortedCampusPrograms[0];
+            }
+        }
+    }
+
+
+    // Creates/updates the main cutoff bar chart
+    function createCutoffChart(campus, selectedYear, selectedProgram, selectedCategoryFilter) {
+        const campusYearData = cutoffData[campus]?.[selectedYear];
+        if (!campusYearData) {
+            if (cutoffChart) cutoffChart.destroy();
+            updateSummaryStatistics(campus, selectedYear, selectedProgram);
+            updateChanceIndicator(campus, selectedYear, applicantCategorySelect.value, currentApplicantRank, selectedProgram);
+            return;
+        }
+
+        const chartLabels = [];
+        const datasets = [];
+        const allCategories = ['General', 'OBC', 'SC', 'ST', 'EWS', 'PwD'];
+        
+        let programsToDisplay = [];
+        if (selectedProgram === "All Programs") {
+            // Display all programs available for this campus/year from the cutoffData
+            programsToDisplay = Object.keys(campusYearData);
+        } else {
+            // Only display the specific selected program if data exists for it
+            if (campusYearData[selectedProgram]) { 
+                programsToDisplay.push(selectedProgram);
+            }
+        }
+
+        // Sort programs alphabetically for consistent chart display
+        programsToDisplay.sort();
+        
+        programsToDisplay.forEach(program => {
+            chartLabels.push(wrapLabels(program, 12));
+        });
+
+        if (selectedCategoryFilter === 'All') {
+            allCategories.forEach(category => {
+                const dataForCategory = programsToDisplay.map(program => campusYearData[program]?.[category] || null);
+                if (dataForCategory.some(d => d !== null)) { // Only add dataset if it has any data points
+                    datasets.push({
+                        label: `${category} Closing Rank`,
+                        data: dataForCategory,
+                        backgroundColor: categoryColorsMap[category],
+                        borderColor: '#ffffff',
+                        borderWidth: 1
+                    });
+                }
+            });
+        } else {
+            const dataForSelectedCategory = programsToDisplay.map(program => campusYearData[program]?.[selectedCategoryFilter] || null);
+            if (dataForSelectedCategory.some(d => d !== null)) { // Only add dataset if it has any data points
+                datasets.push({
+                    label: `${selectedCategoryFilter} Closing Rank`,
+                    data: dataForSelectedCategory,
+                    backgroundColor: categoryColorsMap[selectedCategoryFilter],
+                    borderColor: '#ffffff',
+                    borderWidth: 1
+                });
+            }
+        }
+        
+        const chartData = {
+            labels: chartLabels,
+            datasets: datasets
+        };
+        
+        const chartConfig = {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        stacked: false,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: `Simulated Closing Rank (${selectedYear})`
+                        }
+                    },
+                    y: {
+                        stacked: false
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `B.Des Closing Ranks for NIFT ${campus} (Simulated ${selectedYear})`,
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                           title: tooltipTitleCallback
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                // Use the dynamically determined currentApplicantRank for the annotation line
+                                xMin: currentApplicantRank, 
+                                xMax: currentApplicantRank, 
+                                borderColor: 'rgb(255, 99, 132)',
+                                borderWidth: 2,
+                                borderDash: [6, 6],
+                                label: {
+                                    enabled: true,
+                                    content: `Your Rank: ${currentApplicantRank}`,
+                                    position: 'start'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        if (cutoffChart) {
+            cutoffChart.destroy();
+        }
+        
+        cutoffChart = new Chart(document.getElementById('cutoffChart'), chartConfig);
+        updateSummaryStatistics(campus, selectedYear, selectedProgram); // Update summary whenever main chart is drawn
+        updateChanceIndicator(campus, selectedYear, applicantCategorySelect.value, currentApplicantRank, selectedProgram); // Update chance indicator
+    }
+
+    // Creates/updates the multi-year trend line chart
+    function createTrendChart(campus, program, category) {
+        const years = ['2021', '2022', '2023', '2024', '2025'];
+        const rankData = [];
+
+        years.forEach(year => {
+            const yearData = cutoffData[campus]?.[year];
+            if (yearData && yearData[program] && yearData[program][category] !== undefined) {
+                rankData.push(yearData[program][category]);
+            } else {
+                rankData.push(null); // No data for this year/program/category
+            }
+        });
+
+        const chartData = {
+            labels: years,
+            datasets: [{
+                label: `${program} (${category}) Closing Rank`,
+                data: rankData,
+                borderColor: categoryColorsMap[category],
+                backgroundColor: categoryColorsMap[category],
+                fill: false,
+                tension: 0.1,
+                pointRadius: 5,
+                pointHoverRadius: 8
+            }]
+        };
+
+        const chartConfig = {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year (Simulated Data)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        reverse: true, // Lower ranks are better, so reverse Y-axis
+                        title: {
+                            display: true,
+                            text: 'Simulated Closing Rank'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `Simulated Closing Rank Trend for ${program} (${category}) at NIFT ${campus}`,
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                // Use the dynamically determined currentApplicantRank for the annotation line
+                                yMin: currentApplicantRank, 
+                                yMax: currentApplicantRank, 
+                                borderColor: 'rgb(255, 99, 132)',
+                                borderWidth: 2,
+                                borderDash: [6, 6],
+                                label: {
+                                    enabled: true,
+                                    content: `Your Rank: ${currentApplicantRank}`,
+                                    position: 'start'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        if (trendChart) {
+            trendChart.destroy();
+        }
+        trendChart = new Chart(document.getElementById('trendChart'), chartConfig);
+    }
+
+    // Populates the department dropdown and displays the selected department's details
+    function populateDepartmentDropdown() {
+        departmentSelect.innerHTML = ''; // Clear existing options
+        for (const deptName in bdesSpecializations) {
+            const option = document.createElement('option');
+            option.value = deptName;
+            option.textContent = deptName;
+            departmentSelect.appendChild(option);
+        }
+        // Display details for the first department by default
+        if (Object.keys(bdesSpecializations).length > 0) {
+            displayDepartmentDetails(Object.keys(bdesSpecializations)[0]);
+        }
+    }
+
+    // Displays details for a chosen department
+    function displayDepartmentDetails(deptName) {
+        const dept = bdesSpecializations[deptName];
+        if (dept) {
+            departmentTitle.innerHTML = `${dept.icon} ${deptName}`;
+            departmentDescription.textContent = dept.description;
+        } else {
+            departmentTitle.textContent = 'No Department Selected';
+            departmentDescription.textContent = 'Please select a B.Des specialization from the dropdown.';
+        }
+    }
+
+
+    // --- Event Listeners ---
+
+    // Main chart filters
+    campusSelect.addEventListener('change', () => {
+        // No need to populate programSelect again here, as it's static now (all programs)
+        createCutoffChart(campusSelect.value, yearSelect.value, programSelect.value, categoryFilterSelect.value);
+    });
+
+    yearSelect.addEventListener('change', () => {
+        createCutoffChart(campusSelect.value, yearSelect.value, programSelect.value, categoryFilterSelect.value);
+    });
+
+    programSelect.addEventListener('change', () => { 
+        createCutoffChart(campusSelect.value, yearSelect.value, programSelect.value, categoryFilterSelect.value);
+    });
+
+    categoryFilterSelect.addEventListener('change', () => {
+        createCutoffChart(campusSelect.value, yearSelect.value, programSelect.value, categoryFilterSelect.value);
+    });
+
+    // Event listener for applicantCategorySelect to trigger rank recalculation and chart updates
+    applicantCategorySelect.addEventListener('change', () => {
+         updateDisplayedRanks(); // Recalculate which rank (CMR/Category) to use
+         createCutoffChart(campusSelect.value, yearSelect.value, programSelect.value, categoryFilterSelect.value); // Re-render chart with new effective rank
+         // Re-render trend chart only if a specific program is selected (not "All Programs")
+         if (trendProgramSelect.value && trendProgramSelect.value !== "All Programs") { 
+            createTrendChart(trendCampusSelect.value, trendProgramSelect.value, trendCategorySelect.value); 
+         }
+         updateChanceIndicator(campusSelect.value, yearSelect.value, applicantCategorySelect.value, currentApplicantRank, programSelect.value);
+    });
+
+    updateRanksButton.addEventListener('click', () => {
+        updateDisplayedRanks(); // Recalculate effective rank
+        createCutoffChart(campusSelect.value, yearSelect.value, programSelect.value, categoryFilterSelect.value);
+        // Re-render trend chart only if a specific program is selected (not "All Programs")
+        if (trendProgramSelect.value && trendProgramSelect.value !== "All Programs") {
+            createTrendChart(trendCampusSelect.value, trendProgramSelect.value, trendCategorySelect.value);
+        }
+    });
+
+    // Trend chart filters
+    trendCampusSelect.addEventListener('change', () => {
+        populateTrendProgramSelect(trendCampusSelect.value); // Populate programs based on campus data (or all as fallback)
+        if (trendProgramSelect.value && trendProgramSelect.value !== "All Programs") { 
+            createTrendChart(trendCampusSelect.value, trendProgramSelect.value, trendCategorySelect.value);
+        }
+    });
+
+    trendProgramSelect.addEventListener('change', () => {
+        if (trendProgramSelect.value && trendProgramSelect.value !== "All Programs") { // Ensure a specific program is selected
+            createTrendChart(trendCampusSelect.value, trendProgramSelect.value, trendCategorySelect.value);
+        }
+    });
+
+    trendCategorySelect.addEventListener('change', () => {
+        if (trendProgramSelect.value && trendProgramSelect.value !== "All Programs") { // Ensure a specific program is selected
+            createTrendChart(trendCampusSelect.value, trendProgramSelect.value, trendCategorySelect.value);
+        }
+    });
+
+    updateTrendButton.addEventListener('click', () => {
+        if (trendProgramSelect.value && trendProgramSelect.value !== "All Programs") { // Ensure a specific program is selected
+            createTrendChart(trendCampusSelect.value, trendProgramSelect.value, trendCategorySelect.value);
+        }
+    });
+
+    // Department dropdown event listener for the "Specializations at a Glance" section
+    departmentSelect.addEventListener('change', (e) => {
+        displayDepartmentDetails(e.target.value);
+    });
+
+
+    // Toggle info tooltip for "How to Interpret This Chart"
+    infoTooltipIcon.parentElement.addEventListener('click', function() {
+        this.classList.toggle('active');
+    });
+
+    // Initial load
+    window.onload = () => {
+        updateDisplayedRanks(); // Set initial effective rank based on default selection
+        populateAllProgramsSelect(programSelect); // Populate ALL programs for the main chart
+        populateTrendProgramSelect(trendCampusSelect.value); // Populate programs for trend chart based on initial campus
+        
+        // Ensure initial chart rendering based on dynamically populated values
+        createCutoffChart(campusSelect.value, yearSelect.value, programSelect.value, categoryFilterSelect.value);
+        
+        // Initial rendering for trend chart needs a valid program selected.
+        // If populateTrendProgramSelect sets a specific program, render it.
+        if (trendProgramSelect.value && trendProgramSelect.value !== "All Programs") { 
+            createTrendChart(trendCampusSelect.value, trendProgramSelect.value, trendCategorySelect.value);
+        }
+        
+        populateDepartmentDropdown(); // Populate and display initial department details
+    };
+
+</script>
+</body>
+</html>
+�
